@@ -9,8 +9,22 @@ export default function Home() {
     router.push("./list");
   };
 
+  const handleAdd = () => {
+    router.push("./new");
+  };
+
   return (
   <div className="anki-title">
-    <button onClick={handleStart}>暗記アプリ</button>
+    <button onClick={handleStart}>
+      <h1>
+       クイズセット一覧
+      </h1>
+    </button>
+    <br></br>
+    <button onClick={handleAdd}>
+      <h1>
+        カードを追加する
+      </h1>
+    </button>
   </div>);
 }
