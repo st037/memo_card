@@ -4,7 +4,7 @@ import { StringLiteral } from "typescript";
 
 type QuizSet = {
     id: number;
-    title: String;
+    title: string;
     description: string | null;
     created_at: string;
 };
@@ -20,30 +20,44 @@ export default function QuizListClient({ quizSets }: Props) {
     router.push("/");
   };
 
+  const handleStartQuiz = (quizSetId: number) => {
+    router.push(`/quiz/${quizSetId}`);
+  };
+
   return (
   /*クイズ一覧*/
-  <div>
-    <h1 className="anki-title">クイズ一覧</h1>
+  <div className="page-container">
 
-    {/*戻るボタンを追加*/}
-    <button onClick={handleBack} className="home-button">
-      HOME
-    </button>
+    <div className="page-header">
+        <h1 className="anki-title">クイズ一覧</h1>
+
+        {/*戻るボタンを追加*/}
+        <button onClick={handleBack} className="home-button">
+          HOME
+        </button>
+    </div>
+
     <p>挑戦するクイズセットを選んでださい。</p>
+
     {quizSets.map((set) => (
-        <div key={set.id}>
-            <h2>
+        <div key={set.id} className="quiz-card">
+
+            <h2 className="quiz-title">
                 {set.title}
             </h2>
+
             {set.description && (
-                <p>
+
+                <p className="quiz-description">
                     {set.description}
                 </p>
+
             )}
 
-            <button>
+            <button className="start-button" onClick={() => handleStartQuiz(set.id)}>
                 クイズを始める
             </button>
+
         </div>
     ))}
   </div>
