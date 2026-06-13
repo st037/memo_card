@@ -1,6 +1,5 @@
 "use client";
 import {useRouter} from "next/navigation";
-import { StringLiteral } from "typescript";
 
 type QuizSet = {
     id: number;
