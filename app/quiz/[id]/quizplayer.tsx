@@ -10,41 +10,70 @@ export default function QuizPlayer(
 
     const [index, setIndex] = useState(0);
     const quiz = props.quizzes[index];
-
+    
     const [showAnswer, setShowAnswer] = useState(false);
+
+    const [isTransitioning, setIsTransitioning] = useState(false);
 
     const handleBack = () => {
     router.push("/list");
     };
 
+    const handleCardClick = () => {
+        if (isTransitioning) return;
+        setShowAnswer((prev) => !prev);
+    };
+
+    const handleNext = () => {
+        setIsTransitioning(true);
+        setShowAnswer(false);
+
+        setIndex((prev) => {
+            if (prev >= props.quizzes.length - 1) return 0;
+            return prev + 1
+        });
+
+        setTimeout(() => {
+            setIsTransitioning(false);
+        }, 50);
+    };
+
+    const handleReturn = () => {
+        setIsTransitioning(true);
+        setShowAnswer(false);
+
+        setIndex((prev) => {
+            if (prev <= 0) return 0;
+            return prev - 1;
+        });
+
+        setTimeout(() => {
+            setIsTransitioning(false);
+        }, 50);
+    };
+
     return (
-        <div>
-            <h2>{quiz.question}</h2>
+        <div className="quiz-container">
+            <div className="quiz-counter">
+                {index + 1}/{props.quizzes.length}
+            </div>
 
-            {showAnswer && (
-                <p>{quiz.answer}</p>
-            )}
+            <div className={`flash-card ${showAnswer ? "is-flipped" : ""} ${isTransitioning ? "no-animation" : ""}`} onClick={handleCardClick}>
+                <div className="card-inner">
+                    <div className="card-front">
+                        <h2 className="question">{quiz.question}</h2>
+                    </div>
 
-            {!showAnswer ? (
-                <button onClick={() => setShowAnswer(true)}>
-                    答えを見る
-                </button>
-            ) : (
-                <button onClick={() => {
-                    setShowAnswer(false);
-
-                    if (index < props.quizzes.length - 1){
-                        setIndex(index + 1);
-                    } else if(index == props.quizzes.length - 1){
-                        setIndex(index - (props.quizzes.length - 1));
-                    }
-                }}>
-                    次へ
-                </button>
-            )}
-            <br></br>
-            <button onClick={handleBack}>戻る</button>
+                    <div className="card-back">
+                        <p className="answer">{quiz.answer}</p>
+                    </div>
+                </div>
+            </div>
+            <div className="button-container">
+                <button className="quiz-button" onClick={handleReturn}>戻る</button>
+                <button className="quiz-button" onClick={handleNext}>次へ</button>
+                <button className="quiz-button" onClick={handleBack}>一覧</button>
+            </div>
         </div>
     );
 }
-

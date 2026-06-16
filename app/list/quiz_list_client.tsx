@@ -29,14 +29,11 @@ export default function QuizListClient({ quizSets }: Props) {
 
     <div className="page-header">
         <h1 className="anki-title">クイズ一覧</h1>
-
-        {/*戻るボタンを追加*/}
+        
         <button onClick={handleBack} className="home-button">
           HOME
         </button>
     </div>
-
-    <p>挑戦するクイズセットを選んでださい。</p>
 
     {quizSets.map((set) => (
         <div key={set.id} className="quiz-card">

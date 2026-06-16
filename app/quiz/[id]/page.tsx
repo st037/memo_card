@@ -18,8 +18,9 @@ export default async function QuizPage({params}: Props) {
 
   return (
     <div>
-      <h1>{quiz_sets[0].title}</h1>
-      <p>{quiz_sets[0].description}</p>
+      <div className="page-header">
+        <h1 className="anki-title">{quiz_sets[0].title}</h1>
+      </div>
 
       <QuizPlayer quizzes={quizzes}/>
     </div>

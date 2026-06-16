@@ -14,15 +14,15 @@ export default function Home() {
   };
 
   return (
-  <div className="anki-title">
+  <div className="page-header">
     <button onClick={handleStart}>
-      <h1>
+      <h1 className="anki-title">
        クイズセット一覧
       </h1>
     </button>
     <br></br>
     <button onClick={handleAdd}>
-      <h1>
+      <h1 className="anki-title">
         カードを追加する
       </h1>
     </button>
