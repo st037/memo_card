@@ -28,7 +28,7 @@ export default function QuizListClient({ quizSets }: Props) {
   <div className="page-container">
 
     <div className="page-header">
-        <h1 className="anki-title">クイズ一覧</h1>
+        <h1 className="anki-title">クイズセット</h1>
         
         <button onClick={handleBack} className="home-button">
           HOME
