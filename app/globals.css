@@ -115,6 +115,7 @@ body {
 .start-button:active {
   transform: translateY(2px);
 }
+
 /* ========================================================
    クイズ画面・全体のレイアウト
    ======================================================== */
@@ -348,4 +349,61 @@ select.form-input {
   background-position: right 16px center;
   background-size: 16px;
   padding-right: 40px; /* 矢印と文字が被らないように右側に隙間をあける */
+}
+
+/* ========================================================
+   クイズセット一覧・削除機能用
+   ======================================================== */
+
+/* クイズカード内の絶対配置（削除ボタン）の基準点にする */
+.quiz-card {
+  position: relative;
+}
+
+/* 右上の削除ボタンのスタイル */
+.delete-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #ef4444; /* 警告を促す赤色 */
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: opacity 0.2s ease;
+}
+
+/* マウスホバー時に少し薄くしてボタンらしくする */
+.delete-button:hover {
+  opacity: 0.7;
+}
+
+/* タイトルが削除ボタンと重なるのを防ぐ */
+.quiz-title-with-delete {
+  padding-right: 60px;
+}
+
+/* クイズ裏面の削除ボタン（立体的な重なりを補正） */
+.card-delete-button {
+  background: none;
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 8px 16px; /* 少し押しやすくサイズアップ */
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  margin-top: 30px;
+
+  /* 💡 【重要】裏返ったカード（3D空間）の一番手前にボタンを引きずり出す設定 */
+  transform: translateZ(1px);
+  position: relative;
+  z-index: 10;
+}
+
+.card-delete-button:hover {
+  background-color: #ef4444 !important; /* Tailwindの干渉を防ぐお守り */
+  color: #fff !important;
 }
