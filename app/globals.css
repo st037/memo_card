@@ -407,3 +407,54 @@ select.form-input {
   background-color: #ef4444 !important; /* Tailwindの干渉を防ぐお守り */
   color: #fff !important;
 }
+
+/* ========================================================
+   トップ画面（Home）専用追加スタイル
+   ======================================================== */
+
+/* ログイン状態のテキスト */
+.login-status-text {
+  color: #38bdf8; 
+  margin-bottom: 32px; 
+  font-size: 16px; 
+  font-weight: bold;
+}
+
+/* 未ログイン時の説明文 */
+.login-prompt-text {
+  color: #aaa;
+  margin-top: 12px;
+  margin-bottom: 32px;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* メニューカードのラッパー（縦に並べて幅を制限） */
+.home-menu-box {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+/* リンク全体のアンダーラインを消して白文字ベースにする */
+.menu-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* クイズカード内のテキストを中央揃えに微調整 */
+.home-menu-box .quiz-card {
+  margin-bottom: 0; /* 共通のmarginをリセットしてgapで制御 */
+  text-align: center;
+  cursor: pointer;
+}
+
+/* ログアウトボタンの余白調整 */
+.logout-spec {
+  padding: 8px 24px;
+  font-size: 14px;
+}

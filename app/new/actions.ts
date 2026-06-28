@@ -1,5 +1,6 @@
 "use server";
 
+import {auth} from "@/auth";
 import {neon} from "@neondatabase/serverless";
 import {revalidatePath} from "next/cache";
 
@@ -11,6 +12,14 @@ export async function createQuizAction(
     answer: string
 ) {
 
+    const session = await auth();
+
+    if(!session?.user?.id) {
+        throw new Error("ログインが必要です。");
+    }
+
+    const userId = session.user.id;
+
     const sql = neon(process.env.DATABASE_URL!);
 
     try{
@@ -20,8 +29,8 @@ export async function createQuizAction(
             if (!newSetTitle) throw new Error("新規セットのタイトルがありません");
 
             const [newSet] = await sql`
-                INSERT INTO quiz_sets (title, description)
-                VALUES (${newSetTitle}, ${newSetDescription || null})
+                INSERT INTO quiz_sets (title, description, user_id)
+                VALUES (${newSetTitle}, ${newSetDescription || null}, ${userId})
                 RETURNING id
             `;
             targetSetId = newSet.id;
@@ -29,7 +38,7 @@ export async function createQuizAction(
             targetSetId = quizSetId;
         }
 
-        console.log("サーバー側でデータを受信しました:", {quizSetId, question, answer});
+        console.log("サーバー側でデータを受信しました:", {targetSetId, question, answer});
 
         await sql `
             INSERT INTO quizzes (quiz_set_id, question, answer) 
