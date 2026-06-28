@@ -40,6 +40,10 @@ export default function QuizListClient({ quizSets }: Props) {
     }
   };
 
+  const handleAdd = () => {
+    router.push("./new");
+  };
+
   return (
   /*クイズ一覧*/
   <div className="page-container">
@@ -50,6 +54,7 @@ export default function QuizListClient({ quizSets }: Props) {
         <button onClick={handleBack} className="home-button">
           HOME
         </button>
+        
     </div>
 
     {quizSets.map((set) => (
