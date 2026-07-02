@@ -2,6 +2,8 @@
 import {useState} from "react";
 import {useRouter} from "next/navigation";
 import { deleteQuizSetAction } from "./actions";
+import { signOut } from "next-auth/react";
+import {Session} from "next-auth";
 
 type QuizSet = {
     id: number;
@@ -11,10 +13,11 @@ type QuizSet = {
 };
 
 type Props = {
-    quizSets: QuizSet[];    
+    quizSets: QuizSet[];
+    session: Session | null;    
 };
 
-export default function QuizListClient({ quizSets }: Props) {
+export default function QuizListClient({ quizSets, session }: Props) {
   const router = useRouter();
 
   const handleBack = () => {
@@ -44,16 +47,40 @@ export default function QuizListClient({ quizSets }: Props) {
     router.push("./new");
   };
 
+  const handleLogout = async() => {
+    const confirmed = window.confirm("ログアウトしてもよろしいですか？");
+    if (!confirmed) return;
+    await signOut({callbackUrl: "/"});
+  };
+
   return (
   /*クイズ一覧*/
   <div className="page-container">
 
     <div className="page-header">
+        {session && (
+            <p style={{ color: "#38bdf8", marginBottom: "12px", fontSize: "16px", fontWeight: "bold", textAlign: "center"}}>
+                ログイン中: {session.user?.name || "ユーザー"} さん
+            </p>
+        )}
+
         <h1 className="anki-title">クイズセット</h1>
-        
-        <button onClick={handleBack} className="home-button">
-          HOME
-        </button>
+
+        <div>
+
+            <button onClick={handleAdd} className="ctrl-btn">
+                新規追加
+            </button>
+
+            <button onClick={handleBack} className="ctrl-btn">
+                メニュー
+            </button>
+
+            <button onClick={handleLogout} className="ctrl-btn ctrl-btn-delete">
+                ログアウト
+            </button>
+
+        </div>
         
     </div>
 

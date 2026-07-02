@@ -24,16 +24,6 @@ export default async function Home() {
 
             <br />
 
-            <Link href="/new">
-              <button>
-                <h1 className="anki-title">
-                  カードを追加する
-                </h1>
-              </button>
-            </Link>
-
-            <br />
-
             <form action={async () => {
               "use server";
               await signOut({redirectTo: "/"});
@@ -56,7 +46,7 @@ export default async function Home() {
             <form
               action={async () => {
                 "use server";
-                await signIn("github", {redirectTo: "/"});
+                await signIn("github", {redirectTo: "/list"});
               }} 
             >
               <button className="start-button">

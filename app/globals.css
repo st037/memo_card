@@ -458,3 +458,151 @@ select.form-input {
   padding: 8px 24px;
   font-size: 14px;
 }
+
+/* ========================================================
+   クイズプレイ画面：ヘッダー完全横並び（リファクタリング版）
+   ======================================================== */
+
+/* 古い単体のカウンターが上に残っていたら強制非表示 */
+.quiz-container > .quiz-counter {
+  display: none !important;
+}
+
+/* 一覧・カウンター・削除ボタンを【絶対に1行で横並び】にするコンテナ */
+.quiz-ctrl-header {
+  display: flex !important;
+  flex-direction: row !important;      /* 縦並びを絶対に許さない */
+  justify-content: space-between !important;  /* 中央揃え */
+  align-items: center !important;      /* 上下の中央を揃える */
+  gap: 20px !important;                /* ボタンと数字の横のすき間 */
+  margin: 24px auto 32px auto !important;
+  width: 100%;
+  max-width: 500px;
+  max-width: 650px;
+}
+
+/* 小さい汎用ボタンの基本形（一覧ボタンなど） */
+.quiz-ctrl-header .ctrl-btn {
+  cursor: pointer;
+  border-radius: 6px; 
+  border: 1px solid #444; 
+  background-color: #1a1a1a; 
+  color: #fff;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-block !important; /* 改行を防ぐ */
+}
+
+.quiz-ctrl-header .ctrl-btn:hover {
+  background-color: #333;
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+/* 上部用の削除ボタン（赤枠・hoverで全赤） */
+.quiz-ctrl-header .ctrl-btn-delete {
+  cursor: pointer;
+  border-radius: 6px; 
+  background-color: #1a1a1a; 
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-block !important;
+  
+  border: 1px solid rgba(239, 68, 68, 0.5) !important;
+  color: #ef4444 !important;
+}
+
+.quiz-ctrl-header .ctrl-btn-delete:hover {
+  background-color: #ef4444 !important;
+  color: #fff !important;
+  border-color: #ef4444 !important;
+}
+
+/* 真ん中に綺麗に挟まれる「1/1」のカウンター文字 */
+.quiz-ctrl-header .ctrl-counter {
+  display: inline-block !important;
+  font-size: 18px;
+  color: #aaa;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 !important;                /* 余計な改行用マージンを完全破壊 */
+  padding: 0 !important;
+  line-height: 1 !important;           /* ボタンの文字の高さと同一にする */
+  min-width: 65px !important;          /* 桁数が変わってもボタンが左右にブレないお守り */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* 下部ボタン用（戻る・次へ）の横並びコンテナ */
+.quiz-play-bottom-container {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  gap: 16px;
+  margin-top: 30px;
+}
+
+/* ========================================================
+   クイズ一覧画面（QuizListClient）のヘッダーナビ用
+   ======================================================== */
+
+/* 3つのボタンを綺麗に横並びにして隙間をあけるコンテナ */
+.page-header > div {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 12px !important; /* ボタン同士の間隔 */
+  margin-top: 16px !important;
+}
+
+/* 一覧画面の「新規追加」と「HOME」ボタンの共通スタイル */
+.page-header .ctrl-btn,
+.page-header .home-button {
+  cursor: pointer;
+  border-radius: 6px; 
+  border: 1px solid #444; 
+  background-color: #1a1a1a; 
+  color: #fff;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-block !important;
+  text-decoration: none;
+}
+
+/* ホバー時に青く光らせる */
+.page-header .ctrl-btn:hover,
+.page-header .home-button:hover {
+  background-color: #333;
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+/* 一覧画面の「ログアウト」ボタン（赤枠） */
+.page-header .ctrl-btn-delete {
+  cursor: pointer;
+  border-radius: 6px; 
+  background-color: #1a1a1a; 
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-block !important;
+  
+  border: 1px solid rgba(239, 68, 68, 0.5) !important;
+  color: #ef4444 !important;
+}
+
+/* ログアウトのホバー時は赤く光らせる */
+.page-header .ctrl-btn-delete:hover {
+  background-color: #ef4444 !important;
+  color: #fff !important;
+  border-color: #ef4444 !important;
+}

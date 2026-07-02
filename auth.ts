@@ -21,7 +21,7 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
         },
 
         async session({session, token}) {
-            console.log("🕵️③ session関数に入った時の token.fixedId:", token.fixedpuId);
+            console.log("session関数に入った時の token.fixedId:", token.fixedpuId);
             if (session. user && token.fixedId) {
                 session.user.id = token.fixedId as string;
             }

@@ -1,12 +1,10 @@
 "use client";
 
-import {useState} from "react";
-import {useRouter, useParams} from "next/navigation";
+import { useState } from "react";
+import { useRouter, useParams } from "next/navigation";
 import { deleteQuizCardAction } from "./actions";
 
-export default function QuizPlayer(
-    props: {quizzes: any[];}
-) {
+export default function QuizPlayer(props: { quizzes: any[] }) {
     const router = useRouter();
     const params = useParams();
     const quizSetId = params.id as string;
@@ -27,7 +25,7 @@ export default function QuizPlayer(
     }
 
     const handleBack = () => {
-    router.push("/list");
+        router.push("/list");
     };
 
     const handleCardClick = () => {
@@ -41,7 +39,7 @@ export default function QuizPlayer(
 
         setIndex((prev) => {
             if (prev >= props.quizzes.length - 1) return 0;
-            return prev + 1
+            return prev + 1;
         });
 
         setTimeout(() => {
@@ -73,7 +71,7 @@ export default function QuizPlayer(
             await deleteQuizCardAction(quiz.id, quizSetId);
             alert("カードを削除しました");
 
-            if (index >= props.quizzes.length -1 && index > 0) {
+            if (index >= props.quizzes.length - 1 && index > 0) {
                 setIndex(index - 1);
             }
             setShowAnswer(false);
@@ -85,10 +83,24 @@ export default function QuizPlayer(
 
     return (
         <div className="quiz-container">
-            <div className="quiz-counter">
-                {index + 1}/{props.quizzes.length}
+            
+            {/* 🛠️ 管理操作ヘッダー：ここに3つとも並べます */}
+            <div className="quiz-ctrl-header">
+                <button className="ctrl-btn" onClick={handleBack}>
+                    ホーム
+                </button>
+                
+                {/* 💡 真ん中に配置されるカウンター文字 */}
+                <span className="ctrl-counter">
+                    {index + 1}/{props.quizzes.length}
+                </span>
+
+                <button className="ctrl-btn ctrl-btn-delete" onClick={handleDeleteCard}>
+                    削除
+                </button>
             </div>
 
+            {/* フラッシュカード本体 */}
             <div className={`flash-card ${showAnswer ? "is-flipped" : ""} ${isTransitioning ? "no-animation" : ""}`} onClick={handleCardClick}>
                 <div className="card-inner">
                     <div className="card-front">
@@ -100,11 +112,15 @@ export default function QuizPlayer(
                     </div>
                 </div>
             </div>
-            <div className="button-container">
-                <button className="quiz-button" onClick={handleBack}>一覧</button>
-                <button className="quiz-button" onClick={handleReturn}>戻る</button>
-                <button className="quiz-button" onClick={handleNext}>次へ</button>
-                <button className="card-delete-button" onClick={handleDeleteCard}>このカードを削除</button>
+
+            {/* 下部：ゲーム進行ボタン */}
+            <div className="quiz-play-bottom-container">
+                <button className="quiz-button" onClick={handleReturn}>
+                    戻る
+                </button>
+                <button className="quiz-button" onClick={handleNext}>
+                    次へ
+                </button>
             </div>
         </div>
     );

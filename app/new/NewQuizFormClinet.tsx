@@ -19,7 +19,7 @@ export default function NewQuizFormClient({quizSets}: {quizSets: QuizSet[]}) {
   const[isSubmitting, setIsSubmitting] = useState(false);
 
   const handleBack = () => {
-    router.push("/");
+    router.push("/list");
   };
 
   const handleSubmit = async (e: React.FormEvent<Element>) => {
@@ -53,7 +53,7 @@ export default function NewQuizFormClient({quizSets}: {quizSets: QuizSet[]}) {
         <h1 className="anki-title">新規追加</h1>
 
         <button onClick={handleBack} className="home-button">
-          HOME
+          ホーム
         </button>
       </div>
 

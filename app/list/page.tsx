@@ -19,5 +19,5 @@ export default async function List() {
   console.log("現在ログインしているユーザーのID:", session.user.id);
 
   const quizSets = await getQuizSets(session?.user.id);
-  return <QuizListClient quizSets={quizSets} />;
+  return <QuizListClient quizSets={quizSets} session={session} />;
 }
