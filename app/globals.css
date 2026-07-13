@@ -606,3 +606,87 @@ select.form-input {
   color: #fff !important;
   border-color: #ef4444 !important;
 }
+
+/* ========================================================
+   クイズプレイヤー画面（QuizPlayer）の編集機能用スタイル
+   ======================================================== */
+
+/* 右側のボタンエリア（編集・保存・削除）を横並びにするコンテナ */
+.quiz-ctrl-header .ctrl-btn-group {
+  display: flex !important;
+  gap: 8px !important;
+  align-items: center !important;
+}
+
+/* 編集ボタンの通常時（黄色の枠と文字） */
+.quiz-ctrl-header .ctrl-btn-edit {
+  border-color: #fbbf24 !important;
+  color: #fbbf24 !important;
+  background-color: #1a1a1a;
+  cursor: pointer;
+}
+.quiz-ctrl-header .ctrl-btn-edit:hover {
+  background-color: #fbbf24 !important;
+  color: #111 !important;
+}
+
+/* 保存ボタンの通常時（緑色の枠と文字） */
+.quiz-ctrl-header .ctrl-btn-save {
+  border-color: #4ade80 !important;
+  color: #4ade80 !important;
+  background-color: #1a1a1a;
+  cursor: pointer;
+}
+.quiz-ctrl-header .ctrl-btn-save:hover {
+  background-color: #4ade80 !important;
+  color: #111 !important;
+}
+
+/* 編集フォーム全体のコンテナ */
+.edit-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* 編集中のカード表面の初期化（立体回転時の裏返りを防止） */
+.flash-card .card-front.is-editing-mode {
+  transform: none !important;
+  backface-visibility: visible !important;
+}
+
+/* 入力エリアの各ラベル */
+.edit-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #aaa;
+  font-size: 14px;
+  text-align: left;
+}
+
+/* 入力フォーム（input / textarea）の共通黒系スタイル */
+.edit-input, .edit-textarea {
+  background-color: #222;
+  border: 1px solid #444;
+  border-radius: 6px;
+  color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.edit-textarea {
+  resize: none;
+  height: 100px;
+}
+
+.edit-input:focus, .edit-textarea:focus {
+  border-color: #38bdf8;
+  outline: none;
+}
