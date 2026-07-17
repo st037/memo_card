@@ -34,8 +34,20 @@ export async function createQuizAction(
                 RETURNING id
             `;
             targetSetId = newSet.id;
+
         } else {
+
+            const [validSet] = await sql`
+                SELECT id FROM quiz_sets
+                WHERE id = ${quizSetId} AND user_id = ${userId}
+            `;
+
+            if (!validSet) {
+                throw new Error("指定されたクイズセットが見つからないか、アクセス権限がありません。");
+            }
+
             targetSetId = quizSetId;
+
         }
 
         console.log("サーバー側でデータを受信しました:", {targetSetId, question, answer});
@@ -50,6 +62,6 @@ export async function createQuizAction(
         return {success: true};
     } catch(error) {
         console.log("DB保存エラー:", error);
-        throw new Error("データベースへの保存に失敗しました。");
+        throw new Error(error instanceof Error ? error.message : "データベースへの保存に失敗しました。");
     }
 }

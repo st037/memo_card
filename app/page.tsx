@@ -53,6 +53,17 @@ export default async function Home() {
                 GitHub アカウントでログイン
               </button>
             </form>
+
+            <form
+              action={async () => {
+                "use server";
+                await signIn("google", {redirectTo: "/list"});
+              }}
+            >
+              <button className="start-button">
+                Google アカウントでログイン
+              </button>
+            </form>
           </>
         )}
       </div>
