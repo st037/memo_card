@@ -40,7 +40,7 @@ export default async function Home() {
               ログインが必要です
             </h1>
             <p>
-                クイズアプリを利用するにはGitHubアカウントでサインインしてください。
+                クイズアプリを利用するにはGitHubかGoogleアカウントでサインインしてください。
             </p>
 
             <form

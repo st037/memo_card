@@ -11,7 +11,7 @@ type QuizSet = {
 export default function NewQuizFormClient({quizSets}: {quizSets: QuizSet[]}) {
   const router = useRouter();
 
-  const[quizSetId, setQuizSetId] = useState<number | "new">(quizSets[0]?.id || 1);
+  const[quizSetId, setQuizSetId] = useState<number | "new">("new");
   const[newSetTitle, setNewSetTitle] = useState("");
   const [newSetDescription, setNewSetDescription] = useState("");
   const[question, setQuestion] = useState("");

@@ -1,4 +1,6 @@
+import {auth} from "@/auth";
 import {neon} from "@neondatabase/serverless";
+import {redirect, notFound} from "next/navigation";
 import QuizPlayer from "./quizplayer";
 
 type Props = {
@@ -8,13 +10,24 @@ type Props = {
 };
 
 export default async function QuizPage({params}: Props) {
-  const {id} = await params;
 
+  const session = await auth();
+  if (!session?.user?.id) {
+    redirect("/");
+  }
+
+  const userId = session.user.id;
+  const {id} = await params;
   const sql = neon(process.env.DATABASE_URL!);
 
-  const quizzes = await sql`SELECT * FROM quizzes WHERE quiz_set_id = ${id} ORDER BY id`;
+  const quiz_sets = await sql`SELECT * FROM quiz_sets WHERE id = ${id} AND user_id = ${userId}`;
 
-  const quiz_sets = await sql`SELECT * FROM quiz_sets WHERE id = ${id}`;
+  if(quiz_sets.length === 0) {
+    notFound();
+  }
+
+  const quizzes = await sql`SELECT * FROM quizzes WHERE quiz_set_id = ${quiz_sets[0].id} ORDER BY id`;
+
 
   return (
     <div>
@@ -26,4 +39,3 @@ export default async function QuizPage({params}: Props) {
     </div>
   );
 }
-
