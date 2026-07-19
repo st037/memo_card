@@ -9,7 +9,10 @@ export default function QuizPlayer(props: { quizzes: any[] }) {
     const params = useParams();
     const quizSetId = params.id as string;
 
+    const [displayQuizzes, setDisplayQuizzes] = useState<any[]>([]);
     const [index, setIndex] = useState(0);
+    const [orderMode, setOrderMode] = useState<"normal" | "shuffle">("normal");
+
     const quiz = props.quizzes[index];
     
     const [showAnswer, setShowAnswer] = useState(false);
@@ -105,6 +108,8 @@ export default function QuizPlayer(props: { quizzes: any[] }) {
         try {
             await updateQuizCardAction(quiz.id, editQuestion, editAnswer, quizSetId);
             alert("カードを更新しました!");
+
+            setShowAnswer(false);
             setIsEditing(false);
         } catch(error) {
             console.error(error);
@@ -131,7 +136,11 @@ export default function QuizPlayer(props: { quizzes: any[] }) {
                             保存
                         </button>
                     ) : (
-                        <button className="ctrl-btn ctrl-btn-edit" onClick={(e) => { e.stopPropagation(); setIsEditing(true); }}>
+                        <button className="ctrl-btn ctrl-btn-edit" onClick={(e) => { 
+                            e.stopPropagation();
+                            setShowAnswer(false);
+                            setIsEditing(true);
+                        }}>
                             編集
                         </button>
                     )}
@@ -142,34 +151,31 @@ export default function QuizPlayer(props: { quizzes: any[] }) {
                 </div>
             </div>
 
-            <div className={`flash-card ${showAnswer ? "is-flipped" : ""} ${isTransitioning ? "no-animation" : ""}`} onClick={handleCardClick}>
-                <div className="card-inner">
-                    {isEditing ? (
-                        <div className="card-front" onClick={(e) => e.stopPropagation()}>
-                            <div className="edit-form-container"> 
-                                <label className="edit-label">
-                                    問題文:
-                                    <input type="text" className="edit-input" value={editQuestion} onChange={(e) => setEditQuestion(e.target.value)} />
-                                </label>
-                                <label className="edit-label">
-                                    答え:
-                                    <textarea className="edit-textarea" value={editAnswer} onChange={(e) => setEditAnswer(e.target.value)} />
-                                </label>
-                            </div>
-                        </div>
-                    ) : (
-                        <>
-                            <div className="card-front">
-                                <h2 className="question">{quiz.question}</h2>
-                            </div>
-
-                            <div className="card-back">
-                                <p className="answer">{quiz.answer}</p>
-                            </div>
-                        </>
-                    )}
+            {isEditing ? (
+                <div className="flash-card" onClick={(e) => e.stopPropagation()}>
+                    <div className="edit-form-container" style={{ width: "100%", height: "100%", padding: "20px" }}> 
+                        <label className="edit-label">
+                            問題文:
+                            <input type="text" className="edit-input" value={editQuestion} onChange={(e) => setEditQuestion(e.target.value)} />
+                        </label>
+                        <label className="edit-label">
+                            答え:
+                            <textarea className="edit-textarea" value={editAnswer} onChange={(e) => setEditAnswer(e.target.value)} />
+                        </label>
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <div className={`flash-card ${showAnswer ? "is-flipped" : ""} ${isTransitioning ? "no-animation" : ""}`} onClick={handleCardClick}>
+                    <div className="card-inner">
+                        <div className="card-front">
+                            <h2 className="question">{quiz.question}</h2>
+                        </div>
+                        <div className="card-back">
+                            <p className="answer">{quiz.answer}</p>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <div className="quiz-play-bottom-container">
                 <button className="quiz-button" onClick={handleReturn} disabled={isEditing}>
